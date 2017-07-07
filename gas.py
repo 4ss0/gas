@@ -96,7 +96,7 @@ if __name__ =='__main__':
             if event.type == pygame.QUIT:
                 sys.exit(0)
 
-        window.fill ((255, 255, 255))  # white background
+        window.fill ((0, 0, 0))  # white background
     
         # rimbalzo fra di loro
         for ball1, ball2 in itertools.combinations(ball_list, 2):
