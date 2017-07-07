@@ -1,7 +1,10 @@
+#!/usr/bin/python
+# -*- coding: latin-1 -*-
 
 import pygame
 import random
 import sys
+
 class Ball:
 
 
@@ -12,16 +15,16 @@ class Ball:
         self.ball_boundary = self.ball_image.get_rect (center=(X,Y))
         self.ball_center = [(self.ball_boundary.left+self.ball_boundary.right)/2,(self.ball_boundary.top+self.ball_boundary.bottom)/2]
 
-    
+
         self.rect = self.ball_image.get_rect (center=(X,Y))
 
 
 def distanza(a,b):
     d = (b.ball_center[1]-a.ball_center[1]) * (b.ball_center[1]-a.ball_center[1]) + (b.ball_center[0]-a.ball_center[0]) * (b.ball_center[0]-a.ball_center[0])
-    
-    return d    
-    
-    
+
+    return d
+
+
 
 if __name__ =='__main__':
 
@@ -33,8 +36,8 @@ if __name__ =='__main__':
     pygame.display.set_caption("Palle rimbalzanti")
     num_balls = 5
 
-    
-    
+
+
     ball_list = []
     palla = Ball(random.randint(90, (width - 90)),random.randint(90, (height - 90)))
     ball_list.append(palla)
@@ -56,29 +59,29 @@ if __name__ =='__main__':
                 else:
                     number -= 1 #fa restare invariato number col proseguimento del ciclo
                     break
-        
+
 
     print('lunghezza', len(ball_list))
-                
-            
-        
 
 
-        
+
+
+
+
     while True:
-        for event in pygame.event.get(): 
+        for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                         sys.exit(0)
         window.fill (background_colour)
 
 #rimbalzo sui muri
-        
+
         for ball in ball_list:
                 if ball.ball_boundary.left < 0 or ball.ball_boundary.right > width:
-                        
+
                         ball.velocity[0] = -ball.velocity[0]
                 if ball.ball_boundary.top < 0 or ball.ball_boundary.bottom > height:
-                        
+
                         ball.velocity[1] = -ball.velocity[1]
 
                 for ball1 in range(num_balls-1):
@@ -86,17 +89,17 @@ if __name__ =='__main__':
                         if distanza(
                             ball_list[ball1],ball_list[ball2]) < 4*raggio*raggio:
 
-                            
+
                             ball_list[ball1].velocity[0] = -ball_list[ball1].velocity[0]
                             ball_list[ball1].velocity[1] = -ball_list[ball1].velocity[1]
                             ball_list[ball2].velocity[0] = -ball_list[ball2].velocity[0]
                             ball_list[ball2].velocity[1] = -ball_list[ball2].velocity[1]
 
-                
+
                 #muovere la palla
                 ball.ball_boundary = ball.ball_boundary.move (ball.velocity)
                 ball.ball_center = [(ball.ball_boundary.left+ball.ball_boundary.right)/2,(ball.ball_boundary.top+ball.ball_boundary.bottom)/2]
-               
+
                 #metterla su schermo
                 window.blit (ball.ball_image, ball.ball_boundary)
         pygame.display.flip()
